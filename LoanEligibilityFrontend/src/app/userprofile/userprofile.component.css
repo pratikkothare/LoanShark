@@ -1,0 +1,76 @@
+.profile-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #eef2f3, #dfe9f3);
+}
+
+.profile-card {
+  width: 420px;
+  background: #ffffff;
+  padding: 30px 25px;
+  border-radius: 14px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: 0.3s ease;
+}
+
+.profile-card:hover {
+    transform: translateY(-5px);
+}
+
+.logo-circle {
+  width: 95px;
+  height: 95px;
+  margin: 0 auto 15px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #C62828, #e53935);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 18px rgba(198, 40, 40, 0.3);
+}
+
+.logo-circle img {
+    width: 93px;
+    height: 93px;
+    object-fit: contain;
+    background: white;
+    padding: 8px;
+    border-radius: 50%;
+}
+
+.title {
+  font-family: 'Ink Free';
+  color: #C62828;
+  font-weight: 600;
+  margin-bottom: 25px;
+}
+
+.profile-info {
+  text-align: left;
+  margin-bottom: 15px;
+  padding: 12px;
+  border-radius: 8px;
+  background: #f7f9fc;
+  transition: 0.2s;
+}
+
+.profile-info:hover {
+    background: #eef3f9;
+}
+
+.profile-info label {
+    font-size: 12px;
+    color: #888;
+    display: block;
+}
+
+.profile-info p {
+    margin: 4px 0 0;
+    font-size: 15px;
+    font-weight: 500;
+    color: #333;
+}
+

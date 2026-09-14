@@ -1,0 +1,324 @@
+<div class="eligibility-wrapper">
+
+  <!-- FORM -->
+  <form #eligibilityForm="ngForm">
+
+    <div class="form-card glass">
+
+      <h2>Check Loan Eligibility</h2>
+      <p class="subtitle">Enter your details to proceed</p>
+
+      <!-- INCOME -->
+      <div class="form-group">
+        <label>Monthly Income</label>
+        <div class="input-box">
+          <span>₹</span>
+          <input type="number"
+                 [(ngModel)]="income"
+                 name="income"
+                 #incomeCtrl="ngModel"
+                 required
+                 min="1000"
+                 placeholder="Enter monthly income">
+
+        </div>
+
+        <div class="error" *ngIf="incomeCtrl.touched && incomeCtrl.invalid">
+          <small *ngIf="incomeCtrl.errors?.['required']">Income is required</small>
+          <small *ngIf="incomeCtrl.errors?.['min']">Minimum income should be ₹1000</small>
+        </div>
+      </div>
+
+      <!-- CREDIT SCORE -->
+      <div class="form-group">
+        <label>Credit Score</label>
+
+        <input type="number"
+               [(ngModel)]="creditScore"
+               name="creditScore"
+               #creditCtrl="ngModel"
+               required
+               min="300"
+               max="900"
+               placeholder="Enter credit score (300 - 900)">
+
+        <div class="error" *ngIf="creditCtrl.touched && creditCtrl.invalid">
+          <small *ngIf="creditCtrl.errors?.['required']">Credit Score is required</small>
+          <small *ngIf="creditCtrl.errors?.['min']">Minimum should be 300</small>
+          <small *ngIf="creditCtrl.errors?.['max']">Maximum should be 900</small>
+        </div>
+      </div>
+
+      <!-- HOME -->
+      <div *ngIf="productId == 1">
+        <div class="form-group">
+          <label>Property Value</label>
+          <div class="input-box">
+            <span>₹</span>
+            <input type="number"
+                   [(ngModel)]="propertyValue"
+                   name="propertyValue"
+                   #propertyCtrl="ngModel"
+                   required
+                   min="10000"
+                   placeholder="Enter property value">
+          </div>
+
+          <div class="error" *ngIf="propertyCtrl.touched && propertyCtrl.invalid">
+            <small *ngIf="propertyCtrl.errors?.['required']">Property value required</small>
+          </div>
+        </div>
+      </div>
+
+      <!-- CAR -->
+      <div *ngIf="productId == 2">
+
+        <div class="form-group">
+          <label>Car Price</label>
+          <div class="input-box">
+            <span>₹</span>
+            <input type="number"
+                   [(ngModel)]="carPrice"
+                   name="carPrice"
+                   #carCtrl="ngModel"
+                   required
+                   min="50000"
+                   placeholder="Enter car price">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Down Payment</label>
+          <div class="input-box">
+            <span>₹</span>
+            <input type="number"
+                   [(ngModel)]="downPayment"
+                   name="downPayment"
+                   #downCtrl="ngModel"
+                   required
+                   min="0"
+                   placeholder="Enter down payment">
+          </div>
+        </div>
+
+      </div>
+
+      <!-- PERSONAL -->
+      <div *ngIf="productId == 3">
+
+        <div class="form-group">
+          <label>Loan Amount</label>
+          <div class="input-box">
+            <span>₹</span>
+            <input type="number"
+                   [(ngModel)]="loanAmount"
+                   name="loanAmount"
+                   #loanCtrl="ngModel"
+                   required
+                   min="1000"
+                   placeholder="E.g. 2,50,000">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Purpose</label>
+          <input type="text"
+                 [(ngModel)]="purpose"
+                 name="purpose"
+                 #purposeCtrl="ngModel"
+                 required
+                 placeholder="Medical / Travel / Education">
+        </div>
+
+        <div class="form-group">
+          <label>Years in City</label>
+          <input type="number"
+                 [(ngModel)]="yearsInCity"
+                 name="yearsInCity"
+                 #yearsCtrl="ngModel"
+                 required
+                 min="0"
+                 placeholder="Enter years in city">
+        </div>
+
+      </div>
+
+      <!-- EDUCATION LOAN -->
+      <div *ngIf="productId == 4">
+
+        <!-- LOAN AMOUNT -->
+        <div class="form-group">
+          <label>Loan Amount</label>
+          <div class="input-box">
+            <span>₹</span>
+            <input type="number"
+                   [(ngModel)]="eduLoanAmount"
+                   name="loanAmount"
+                   #loanCtrl="ngModel"
+                   required
+                   min="50000"
+                   placeholder="Enter loan amount">
+          </div>
+
+          <div class="error" *ngIf="loanCtrl.touched && loanCtrl.invalid">
+            <small *ngIf="loanCtrl.errors?.['required']">Loan amount required</small>
+            <small *ngIf="loanCtrl.errors?.['min']">Minimum ₹50,000 required</small>
+          </div>
+        </div>
+
+        <!-- COURSE -->
+        <div class="form-group">
+          <label>Course</label>
+          <input type="text"
+                 [(ngModel)]="course"
+                 name="course"
+                 #courseCtrl="ngModel"
+                 required
+                 placeholder="BTech / MBA / MBBS">
+
+          <div class="error" *ngIf="courseCtrl.touched && courseCtrl.invalid">
+            <small>Course is required</small>
+          </div>
+        </div>
+
+        <!-- UNIVERSITY -->
+        <div class="form-group">
+          <label>University</label>
+          <input type="text"
+                 [(ngModel)]="university"
+                 name="university"
+                 #uniCtrl="ngModel"
+                 required
+                 placeholder="Enter university name">
+
+          <div class="error" *ngIf="uniCtrl.touched && uniCtrl.invalid">
+            <small>University is required</small>
+          </div>
+        </div>
+
+        <!-- CO-APPLICANT INCOME -->
+        <div class="form-group">
+          <label>Co-Applicant Income (Yearly)</label>
+          <div class="input-box">
+            <span>₹</span>
+            <input type="number"
+                   [(ngModel)]="coApplicantIncome"
+                   name="coApplicantIncome"
+                   #coCtrl="ngModel"
+                   required
+                   min="10000"
+                   placeholder="Parent/Guardian income">
+          </div>
+
+          <div class="error" *ngIf="coCtrl.touched && coCtrl.invalid">
+            <small *ngIf="coCtrl.errors?.['required']">Required</small>
+            <small *ngIf="coCtrl.errors?.['min']">Minimum ₹10,000 required</small>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- GOLD LOAN -->
+      <div *ngIf="productId == 5">
+
+        <!-- GOLD WEIGHT -->
+        <div class="form-group">
+          <label>Gold Weight (grams)</label>
+          <input type="number"
+                 [(ngModel)]="goldWeight"
+                 name="goldWeight"
+                 #weightCtrl="ngModel"
+                 required
+                 min="1"
+                 placeholder="Enter gold weight">
+
+          <div class="error" *ngIf="weightCtrl.touched && weightCtrl.invalid">
+            <small *ngIf="weightCtrl.errors?.['required']">Required</small>
+            <small *ngIf="weightCtrl.errors?.['min']">Minimum 1 gram</small>
+          </div>
+        </div>
+
+        <!-- GOLD PURITY -->
+        <div class="form-group">
+          <label>Gold Purity (%)</label>
+          <input type="number"
+                 [(ngModel)]="goldPurity"
+                 name="goldPurity"
+                 #purityCtrl="ngModel"
+                 required
+                 min="50"
+                 max="100"
+                 placeholder="Enter purity (e.g. 90)">
+
+          <div class="error" *ngIf="purityCtrl.touched && purityCtrl.invalid">
+            <small *ngIf="purityCtrl.errors?.['required']">Required</small>
+            <small *ngIf="purityCtrl.errors?.['min']">Min 50%</small>
+            <small *ngIf="purityCtrl.errors?.['max']">Max 100%</small>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- BUTTON -->
+      <button class="primary-btn"
+              [disabled]="eligibilityForm.invalid"
+              (click)="validateAndCheck()">
+        Check Eligibility
+      </button>
+
+    </div>
+
+  </form>
+
+  <!-- STATUS PANEL -->
+  <div class="status-card glass">
+
+    <h3>Verification Status</h3>
+
+    <!-- CIBIL -->
+    <div class="step" [ngClass]="steps.cibil">
+      <div *ngIf="steps.cibil === 'pending' && isChecking" class="loading">
+        <div class="spinner"></div>
+        Checking CIBIL
+      </div>
+      <div *ngIf="steps.cibil === 'done'">✔ CIBIL Verified</div>
+      <div *ngIf="steps.cibil === 'failed'">❌ CIBIL Failed</div>
+    </div>
+
+    <!-- INCOME -->
+    <div class="step" [ngClass]="steps.income">
+      <div *ngIf="steps.income === 'pending' && steps.cibil === 'done'" class="loading">
+        <div class="spinner"></div>
+        Checking Income
+      </div>
+      <div *ngIf="steps.income === 'done'">✔ Income Verified</div>
+      <div *ngIf="steps.income === 'failed'">❌ Income Failed</div>
+    </div>
+
+    <!-- FINAL -->
+    <div class="step" [ngClass]="steps.eligibility">
+      <div *ngIf="steps.eligibility === 'pending' && steps.income === 'done'" class="loading">
+        <div class="spinner"></div>
+        Final Check
+      </div>
+      <div *ngIf="steps.eligibility === 'done'">✔ Approved</div>
+      <div *ngIf="steps.eligibility === 'failed'">❌ Not Eligible</div>
+    </div>
+
+    <!-- RESULT -->
+    <div *ngIf="result"
+         class="result-box"
+         [ngClass]="eligible ? 'success' : 'fail'">
+      {{ result }}
+    </div>
+
+    <!-- EMI -->
+    <button *ngIf="allDone"
+            class="calculate-btn"
+            routerLink="/emi-calculator">
+      Calculate EMI →
+    </button>
+
+  </div>
+
+</div>

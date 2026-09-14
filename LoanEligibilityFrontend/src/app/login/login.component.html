@@ -1,0 +1,46 @@
+<div class="page">
+    <div class="container">
+      <div class="card">
+        <h2 class="title">LoanIQ</h2>
+        <p class="subtitle">Sign in to your account</p>
+        <form #form="ngForm" (ngSubmit)="login()">
+          <div class="field">
+            <label>Email Address</label>
+            <input type="email"
+                   name="email"
+                   [(ngModel)]="user.email"
+                   required
+                   email
+                   #email="ngModel">
+            <small *ngIf="email.invalid && email.touched">
+              Enter valid email
+            </small>
+          </div>
+          <div class="field">
+            <label>Password</label>
+            <input type="password"
+                   name="password"
+                   [(ngModel)]="user.password"
+                   required
+                   minlength="8"
+                   #password="ngModel">
+            <small *ngIf="password.invalid && password.touched">
+              Password must be at least 8 characters
+            </small>
+          </div>
+          <button type="submit"
+                  class="submit"
+                  [disabled]="form.invalid">
+            Sign In
+          </button>
+        </form>
+        <p class="bottom-text">
+          Don't have an account?
+          <a routerLink="/register">Register here</a>
+        </p>
+        <p class="bottom-text">
+          <a routerLink="/reset-password">Reset Password</a>
+        </p>
+      </div>
+    </div>
+  </div>

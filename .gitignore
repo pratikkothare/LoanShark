@@ -1,0 +1,21 @@
+# Dependencies
+node_modules/
+packages/
+venv/
+.env
+
+# Build outputs & binaries
+bin/
+obj/
+dist/
+build/
+*.dll
+*.exe
+*.pdb
+
+# IDE files & OS caches
+.vs/
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

@@ -1,0 +1,31 @@
+<div class="admin-layout">
+  <app-admin-sidebar></app-admin-sidebar>
+  <div class="content">
+    <div class="main">
+      <div *ngIf="loading" class="info">Loading data...</div>
+      <div *ngIf="errorMessage" class="error">
+        {{ errorMessage }}
+      </div>
+      <div class="table-box" *ngIf="!loading && users.length > 0">
+        <h3>Users</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of users">
+              <td>{{ user.fullName }}</td>
+              <td>{{ user.email }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div *ngIf="!loading && users.length === 0" class="info">
+        No users found.
+      </div>
+    </div>
+  </div>
+</div>

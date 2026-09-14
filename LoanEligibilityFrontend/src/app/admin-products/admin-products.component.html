@@ -1,0 +1,130 @@
+<div class="layout">
+
+  <app-admin-sidebar></app-admin-sidebar>
+
+  <div class="main">
+
+
+    <div class="header">
+
+      <h2>Loan Products</h2>
+
+      <button class="primary-btn" (click)="openAddModal()">+ Add Product</button>
+
+    </div>
+
+
+    <div class="search-box">
+
+      <input type="text" placeholder="Search products..."
+             [(ngModel)]="searchText"
+             (input)="applyFilter()">
+
+    </div>
+
+
+    <div class="card">
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th>ID</th>
+
+            <th>Name</th>
+
+            <th>Interest %</th>
+
+            <th>Max Amount</th>
+
+            <th>Tenure</th>
+
+            <th>Actions</th>
+
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          <tr *ngFor="let p of paginatedProducts">
+
+            <td>{{ p.productId }}</td>
+
+            <td>{{ p.productName }}</td>
+
+            <td>{{ p.interestRate }}</td>
+
+            <td>{{ p.maxAmount }}</td>
+
+            <td>{{ p.tenureMonths }}</td>
+
+            <td>
+
+              <button class="edit-btn" (click)="openEditModal(p)">Edit</button>
+
+              <button class="delete-btn" (click)="deleteProduct(p.productId)">Delete</button>
+
+            </td>
+
+          </tr>
+
+          <tr *ngIf="!filteredProducts.length">
+
+            <td colspan="6" class="empty">No products found</td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+    <div class="pagination">
+
+      <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">Prev</button>
+
+      <button *ngFor="let page of [].constructor(totalPages()); let i = index"
+              [class.active]="currentPage === i+1"
+              (click)="changePage(i+1)">
+
+        {{ i+1 }}
+
+      </button>
+
+      <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages()">Next</button>
+
+    </div>
+
+  </div>
+
+</div>
+
+  <div class="modal-backdrop" *ngIf="showModal">
+
+    <div class="modal-box">
+
+      <h3>{{ isEditMode ? 'Edit Product' : 'Add Product' }}</h3>
+
+      <input placeholder="Product Name" [(ngModel)]="selectedProduct.productName">
+
+      <input type="number" placeholder="Interest Rate" [(ngModel)]="selectedProduct.interestRate">
+
+      <input type="number" placeholder="Max Amount" [(ngModel)]="selectedProduct.maxAmount">
+
+      <input type="number" placeholder="Tenure Months" [(ngModel)]="selectedProduct.tenureMonths">
+
+      <div class="modal-actions">
+
+        <button class="primary-btn" (click)="saveProduct()">Save</button>
+
+        <button class="secondary-btn" (click)="closeModal()">Cancel</button>
+
+      </div>
+
+    </div>
+
+  </div>

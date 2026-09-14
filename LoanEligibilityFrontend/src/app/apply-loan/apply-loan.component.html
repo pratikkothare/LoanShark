@@ -1,0 +1,212 @@
+<div class="loan-page">
+  <div class="loan-card">
+
+    <div class="header-section">
+      <h2>Apply for Loan</h2>
+      <p>Complete application and upload required documents</p>
+    </div>
+
+
+    <div class="form-grid">
+
+      <div class="field">
+        <label>Loan Amount</label>
+        <input type="number" [(ngModel)]="loanAmount" readonly>
+      </div>
+
+      <div class="field">
+        <label>Tenure (Months)</label>
+        <input type="number" [(ngModel)]="tenureMonths" readonly>
+      </div>
+
+      <div class="field">
+        <label>Monthly Income</label>
+        <input type="number" [(ngModel)]="income" readonly>
+      </div>
+
+      <div class="field">
+        <label>Credit Score</label>
+        <input type="number" [(ngModel)]="creditScore" readonly>
+      </div>
+
+    </div>
+
+
+
+    <div class="upload-box">
+      <h3>Upload Documents</h3>
+
+
+      <div class="upload-row">
+        <label class="required-label">Aadhaar Card</label>
+
+        <input type="file"
+               id="aadhaar"
+               accept=".jpg,.jpeg,.png,.pdf"
+               hidden
+               (change)="onFileSelected($event,'aadhaar')">
+
+        <label for="aadhaar" class="upload-btn">
+          Choose File
+        </label>
+
+        <div class="upload-status" *ngIf="uploading.aadhaar">
+          <span class="spinner"></span>
+          Uploading...
+        </div>
+
+        <div class="success" *ngIf="uploaded.aadhaar">
+          ✔ Uploaded
+        </div>
+
+      </div>
+
+
+
+      <div class="upload-row">
+        <label class="required-label">PAN Card</label>
+
+        <input type="file"
+               id="pan"
+               accept=".jpg,.jpeg,.png,.pdf"
+               hidden
+               (change)="onFileSelected($event,'pan')">
+
+        <label for="pan" class="upload-btn">
+          Choose File
+        </label>
+
+        <div class="upload-status" *ngIf="uploading.pan">
+          <span class="spinner"></span>
+          Uploading...
+        </div>
+
+        <div class="success" *ngIf="uploaded.pan">
+          ✔ Uploaded
+        </div>
+
+      </div>
+
+
+
+      <div class="upload-row">
+        <label class="required-label">Salary Slip</label>
+
+        <input type="file"
+               id="salary"
+               accept=".jpg,.jpeg,.png,.pdf"
+               hidden
+               (change)="onFileSelected($event,'salary')">
+
+        <label for="salary" class="upload-btn">
+          Choose File
+        </label>
+
+        <div class="upload-status" *ngIf="uploading.salary">
+          <span class="spinner"></span>
+          Uploading...
+        </div>
+
+        <div class="success" *ngIf="uploaded.salary">
+          ✔ Uploaded
+        </div>
+
+      </div>
+
+
+
+      <div class="upload-row">
+        <label class="required-label">Bank Statement</label>
+
+        <input type="file"
+               id="bank"
+               accept=".jpg,.jpeg,.png,.pdf"
+               hidden
+               (change)="onFileSelected($event,'bank')">
+
+        <label for="bank" class="upload-btn">
+          Choose File
+        </label>
+
+        <div class="upload-status" *ngIf="uploading.bank">
+          <span class="spinner"></span>
+          Uploading...
+        </div>
+
+        <div class="success" *ngIf="uploaded.bank">
+          ✔ Uploaded
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <button class="submit-btn"
+            (click)="applyLoan()"
+            [disabled]="!allDocsUploaded()">
+      Submit Application
+    </button>
+    <p class="error" *ngIf="showError">Please Upload all required Documents</p>
+
+    <div class="success-overlay"
+         *ngIf="showSuccessModal">
+
+      <div class="success-box">
+
+        <div *ngIf="isProcessing">
+
+          <div class="loader"></div>
+
+          <h3>
+            Submitting Application...
+          </h3>
+
+        </div>
+
+        <div *ngIf="showSuccessTick">
+
+          <div class="checkmark-circle">
+            ✔
+          </div>
+
+          <h2>
+            Application Submitted Successfully
+          </h2>
+
+          <div class="app-details">
+            <p>
+              <strong>Application Id:</strong>
+              {{applicationId}}
+            </p>
+
+            <p>
+              <strong>Status:</strong>
+              Pending Verification
+            </p>
+          </div>
+
+
+          <div class="action-buttons">
+
+            <button class="dash-btn"
+                    (click)="goDashboard()">
+              Go To Dashboard
+            </button>
+
+            <button class="download-btn"
+                    (click)="downloadDoc()">
+              Download Doc
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+  </div>
+</div>

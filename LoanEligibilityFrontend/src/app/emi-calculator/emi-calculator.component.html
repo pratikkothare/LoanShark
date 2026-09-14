@@ -1,0 +1,113 @@
+<div class="emi-container">
+  <div class="emi-box">
+
+    <!-- LEFT -->
+    <div class="form-section">
+
+      <div class="header">
+        <h2>{{loanType}} Calculator</h2>
+        <p class="subtitle">Adjust parameters to see your monthly commitment.</p>
+      </div>
+
+      <!-- Loan Amount -->
+      <div class="input-group">
+        <label>Loan Amount</label>
+        <div class="input-wrapper">
+          <span class="rupee">₹</span>
+          <input type="number" [(ngModel)]="loanAmount" readonly>
+        </div>
+      </div>
+
+      <!-- Tenure -->
+      <div class="input-group">
+        <label>Tenure (Months)</label>
+
+        <input type="range"
+               [min]="6"
+               max="300"
+               step="1"
+               [(ngModel)]="tenureMonths"
+               class="slider">
+
+        <div class="slider-val">
+          {{tenureMonths}} months
+        </div>
+      </div>
+
+      <!-- Income -->
+      <div class="input-group">
+        <label>Monthly Income</label>
+        <div class="input-wrapper">
+          <span class="rupee">₹</span>
+          <input type="number" [(ngModel)]="income" readonly>
+        </div>
+      </div>
+
+      <!-- Button -->
+      <button class="calc-btn" (click)="calculateEmi()">
+        Calculate My EMI
+      </button>
+
+    </div>
+
+    <!-- RIGHT -->
+    <div class="result-section" [class.active]="result">
+
+      <div *ngIf="result; else emptyState">
+
+        <p class="label">Estimated Monthly EMI</p>
+        <p class="rate">Interest Rate : {{interestRate}}%</p>
+
+        <h1 class="amount">
+          <span>₹</span>{{emi | number:'1.2-2'}}
+        </h1>
+
+        <div class="status-badge"
+             [ngClass]="isEligible ? 'success' : 'fail'">
+          {{ isEligible ? 'Eligible' : ' Not Eligible' }}
+        </div>
+
+        <div class="breakdown">
+
+          <div class="row">
+            <span>Principal Amount</span>
+            <span>₹ {{loanAmount | number}}</span>
+          </div>
+
+          <div class="row">
+            <span>Tenure</span>
+            <span>{{tenureYears}} years</span>
+          </div>
+
+          <div class="row">
+            <span>Total Interest</span>
+            <span>₹ {{totalInterest | number}}</span>
+          </div>
+
+          <div class="row total">
+            <span>Total Payable</span>
+            <span>₹ {{totalAmount | number}}</span>
+          </div>
+
+        </div>
+        <p class="result-text">{{result}}</p>
+        <div class="apply-wrapper">
+          <button *ngIf="isEligible"
+                  routerLink="/apply-loan"
+                  class="apply-circle">
+            →
+          </button>
+        </div>
+
+      </div>
+
+      <ng-template #emptyState>
+        <div class="empty-msg">
+          <p>Click calculate to view eligibility</p>
+        </div>
+      </ng-template>
+
+    </div>
+
+  </div>
+</div>

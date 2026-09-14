@@ -1,0 +1,170 @@
+<div class="chat-toggle" (click)="toggleChat()">
+ <img src="assets/bot.png" alt="Chatbot" />
+</div>
+
+<div class="chat-overlay"
+     *ngIf="showChat"
+     (click)="toggleChat()">
+
+  <div class="chat-box"
+       (click)="$event.stopPropagation()">
+
+    <div class="chat-header">
+      LoanIQ AI Assistant
+      <span class="cross-button" (click)="toggleChat()">✖</span>
+    </div>
+
+    <div class="chat-body" #chatBody>
+
+      <div class="message"
+           *ngFor="let msg of messages"
+           [ngClass]="msg.sender">
+
+        <div *ngIf="!msg.applications && !msg.products">
+          {{msg.text}}
+          <div *ngIf="msg.showLoginButton" class="login-btn-wrap">
+            <button class="chat-login-btn" (click)="goToLogin()">
+              Login Now
+            </button>
+          </div>
+        </div>
+
+        <div *ngIf="msg.products" class="product-list">
+
+          <div class="product-list-title">
+            Available Loan Products
+          </div>
+
+          <div class="product-item"
+               *ngFor="let prod of msg.products; let i=index">
+
+            <div class="product-number">
+              {{i+1}}
+            </div>
+
+            <div class="product-info">
+
+              <div class="product-name">
+                {{prod.productName}}
+              </div>
+
+              <div class="product-detail">
+                Interest Rate: {{prod.interestRate}}%
+              </div>
+
+              <div class="product-desc"
+                   *ngIf="prod.description">
+
+                {{prod.description}}
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <div *ngIf="msg.withdrawOptions" class="product-list">
+
+          <div class="product-list-title">
+            Choose Application To Withdraw
+          </div>
+
+          <div class="product-item"
+               *ngFor="let app of msg.withdrawOptions">
+
+            <div class="product-number">
+              {{app.applicationId}}
+            </div>
+
+            <div class="product-info">
+
+              <div class="product-name">
+                Application #{{app.applicationId}}
+              </div>
+
+              <div class="product-detail">
+                ₹{{app.loanAmount | number}}
+                •
+                {{app.tenureMonths}} Months
+              </div>
+
+              <button class="withdraw-btn"
+                      (click)="withdrawApplication(app.applicationId)">
+                Withdraw
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+        <div *ngIf="msg.applications" class="product-list">
+
+          <div class="product-list-title">
+            Your Loan Applications
+          </div>
+
+          <div class="product-item"
+               *ngFor="let app of msg.applications; let i=index">
+
+            <div class="product-number">
+              {{i+1}}
+            </div>
+
+            <div class="product-info">
+
+              <div class="product-name">
+                Application #{{app.applicationId}}
+              </div>
+
+              <div class="product-detail">
+                ₹{{app.loanAmount | number}}
+                •
+                {{app.tenureMonths}} Months
+              </div>
+
+              <div class="product-desc">
+                Status:
+                <span [class.pending]="app.status=='Pending'"
+                      [class.rejected]="app.status=='Rejected'"
+                      [class.approved]="app.status=='Approved'">
+
+                  {{app.status}}
+
+                </span>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+        <div *ngIf="msg.showLoanProducts" class="chat-actions">
+          <button class="chat-btn" (click)="goToLoanProducts()">View Loan Products</button>
+        </div>
+      </div>
+
+
+      <div *ngIf="isTyping" class="typing-wrap">
+        <div class="typing-bubble">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="chat-footer">
+      <input [(ngModel)]="userMessage"
+             placeholder="Ask about loans..."
+             (keyup.enter)="sendMessage()" />
+      <button (click)="sendMessage()">
+        ➤
+      </button>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,217 @@
+<div class="admin-container">
+  <app-admin-sidebar></app-admin-sidebar>
+
+  <div class="content">
+
+    <h2>Admin Dashboard</h2>
+
+    <!-- STATS -->
+    <div class="cards">
+      <div class="card">
+        <h4>Total Applications</h4>
+        <p>{{ stats.total }}</p>
+      </div>
+
+      <div class="card">
+        <h4>Approved</h4>
+        <p class="green">{{ stats.approved }}</p>
+      </div>
+
+      <div class="card">
+        <h4>Pending</h4>
+        <p class="orange">{{ stats.pending }}</p>
+      </div>
+
+      <div class="card">
+        <h4>Rejected</h4>
+        <p class="red">{{ stats.rejected }}</p>
+      </div>
+    </div>
+
+    <!-- TABLE -->
+    <div class="table-container">
+
+      <h3>Loan Applications</h3>
+
+      <p *ngIf="loading">Loading...</p>
+      <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+
+      <table *ngIf="!loading && loans.length > 0">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>User</th>
+            <th>Amount</th>
+            <th>Status</th>
+            <th>Documents</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let loan of pendingLoans">
+
+            <td>{{ loan.applicationId }}</td>
+            <td>{{ loan.userName }}</td>
+            <td>₹{{ loan.loanAmount }}</td>
+
+            <td>
+              <span [ngClass]="loan.status.toLowerCase()">
+                {{ loan.status }}
+              </span>
+            </td>
+
+            <td>
+              <a *ngIf="loan.documentUrl"
+                 (click)="download(loan.applicationId)"
+                 class="doc-btn">
+                View / Download
+              </a>
+
+              <span *ngIf="!loan.documentUrl">
+                Not Uploaded
+              </span>
+            </td>
+
+            <td>
+
+              <!-- VERIFY -->
+              <button class="verify-btn"
+                      (click)="openVerifyPopup(loan)">
+                Verify Using AI
+              </button>
+
+              <div *ngIf="loan.result">
+                <small [ngClass]="loan.result.verified ? 'success' : 'error'">
+                  {{ loan.result.verified ? '✔ Verified' : '❌ Not Verified' }}
+                </small>
+              </div>
+
+              <br>
+
+              <!-- APPROVE -->
+              <button class="approve-btn"
+                      (click)="openPopup(loan, 'Approved')"
+                      *ngIf="loan.status !== 'Approved'">
+                Approve
+              </button>
+
+              <!-- REJECT -->
+              <button class="reject-btn"
+                      (click)="openPopup(loan, 'Rejected')"
+                      *ngIf="loan.status !== 'Rejected'">
+                Reject
+              </button>
+
+            </td>
+
+          </tr>
+        </tbody>
+      </table>
+
+      <p *ngIf="!loading && loans.length === 0">No data found</p>
+
+    </div>
+  </div>
+</div>
+
+<div class="popup-overlay" *ngIf="showVerifyPopup">
+  <div class="popup-box ai-popup">
+
+    <h3>AI Verification Engine</h3>
+
+    <p class="popup-subtitle">Analyzing uploaded documents...</p>
+
+
+    <!-- DOB -->
+    <div class="verify-row">
+      <span>📅 DOB</span>
+      <span *ngIf="loadingStep < 1" class="spinner"></span>
+      <span *ngIf="loadingStep >= 1" class="success">✔ Verified</span>
+    </div>
+
+    <!-- GENDER -->
+    <div class="verify-row">
+      <span>⚧ Gender</span>
+      <span *ngIf="loadingStep < 2" class="spinner"></span>
+      <span *ngIf="loadingStep >= 2" class="success">✔ Verified</span>
+    </div>
+
+    <!-- ADDRESS -->
+    <div class="verify-row">
+      <span>📍 Address</span>
+      <span *ngIf="loadingStep < 3" class="spinner"></span>
+      <span *ngIf="loadingStep >= 3" class="success">✔ Verified</span>
+    </div>
+
+    <!--Name-->
+    <div class="verify-row">
+      <span>👤 Name</span>
+
+      <span *ngIf="loadingStep < 4" class="spinner"></span>
+
+      <span *ngIf="loadingStep >= 4"
+            [ngClass]="verifyResult?.verified ? 'success' : 'error'">
+        {{ verifyResult?.verified ? '✔ Verified' : '❌ Mismatch' }}
+      </span>
+    </div>
+    <!-- RESULT -->
+    <div class="decision-box"
+         *ngIf="loadingStep === 4"
+         [ngClass]="verifyResult?.verified ? 'success-box' : 'error-box'">
+
+      <div class="decision-left">
+        <span class="decision-icon">
+          {{ verifyResult?.verified ? '' : '' }}
+        </span>
+      </div>
+
+      <div class="decision-right">
+        <h4>
+          {{ verifyResult?.verified ? 'Verification Successful' : 'Verification Failed' }}
+        </h4>
+
+        <p>
+          {{
+           verifyResult?.verified
+          ? 'All checks passed. This application is safe to approve.'
+          : 'Name mismatch detected between documents.'
+          }}
+        </p>
+
+        <small *ngIf="!verifyResult?.verified">
+          Suggested action: Reject or request re-upload
+        </small>
+      </div>
+
+    </div>
+
+    <button class="close-btn" (click)="showVerifyPopup = false">
+      Close
+    </button>
+
+  </div>
+</div>
+
+<!-- ===================== APPROVE/REJECT POPUP ===================== -->
+
+<div class="popup-overlay" *ngIf="showPopup">
+  <div class="popup-box">
+
+    <h3>
+      {{ actionType === 'Approved' ? 'Approve Loan' : 'Reject Loan' }}
+    </h3>
+
+    <p><b>ID:</b> {{ selectedLoan?.applicationId }}</p>
+
+    <textarea [(ngModel)]="adminComment"
+              placeholder="Enter comment..."
+              rows="4"></textarea>
+
+    <div class="popup-actions">
+      <button class="submit-btn" (click)="submitAction()">Submit</button>
+      <button class="cancel-btn" (click)="showPopup = false">Cancel</button>
+    </div>
+
+  </div>
+</div>

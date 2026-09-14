@@ -1,0 +1,103 @@
+.container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #F4F6F8;
+}
+.bottom-text {
+  text-align: center;
+  margin-top: 15px;
+  color: #555;
+  font-size: 14px;
+}
+
+
+.bottom-text a {
+    color: #C62828; 
+    text-decoration: none;
+    font-weight: 500;
+    margin-left: 5px;
+    transition: 0.3s;
+}
+
+.bottom-text a:hover {
+      text-decoration: underline;
+      color: #b71c1c;
+}
+
+.bottom-text:last-child {
+    margin-top: 8px;
+}
+
+.card {
+  width: 420px;
+  padding: 30px;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.title {
+  text-align: center;
+  color: #C62828;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.subtitle {
+  text-align: center;
+  color: #777;
+  margin-bottom: 25px;
+}
+
+
+.field {
+  margin-bottom: 15px;
+}
+
+.field label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+    font-size: 14px;
+}
+
+.field input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    outline: none;
+    background: #fff;
+}
+
+.field small {
+    color: red;
+    font-size: 12px;
+}
+
+
+.submit {
+  width: 100%;
+  padding: 12px;
+  background-color: #C62828;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.submit:hover {
+    background-color: #b71c1c;
+}
+
+
+.submit:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+

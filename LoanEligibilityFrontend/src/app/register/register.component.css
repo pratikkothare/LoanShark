@@ -1,0 +1,93 @@
+.register-wrapper {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #F4F6F8;
+}
+
+/* Card */
+.register-card {
+  width: 420px;
+  padding: 30px;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+/* Title */
+.title {
+  text-align: center;
+  color: #C62828;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+/* Subtitle */
+.subtitle {
+  text-align: center;
+  color: #777;
+  margin-bottom: 25px;
+}
+
+/* Inputs */
+.input-custom {
+  background-color: #FFFFFF;
+  color: #333;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+  /* Focus */
+  .input-custom:focus {
+    border-color: #C62828;
+    box-shadow: 0 0 4px rgba(198, 40, 40, 0.3);
+  }
+
+/* Validation */
+input.ng-invalid.ng-touched {
+  border: 1px solid red;
+}
+
+input.ng-valid.ng-touched {
+  border: 1px solid green;
+}
+
+/* Button */
+.btn-primary-custom {
+  background-color: #C62828;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  transition: 0.3s;
+}
+
+  .btn-primary-custom:hover {
+    background-color: #b71c1c;
+  }
+
+  .btn-primary-custom:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+
+/* Login text */
+.login-text {
+  text-align: center;
+  margin-top: 15px;
+}
+
+  .login-text a {
+    color: #C62828;
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+/* Error */
+.error {
+  color: red;
+  font-size: 12px;
+  display: block;
+  margin-top: 4px;
+}

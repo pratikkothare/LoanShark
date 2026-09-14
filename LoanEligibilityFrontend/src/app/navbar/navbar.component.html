@@ -1,0 +1,91 @@
+<nav class="navbar navbar-expand-lg navbar-light glass-navbar px-4">
+
+  <!-- Logo -->
+  <a class="navbar-brand fw-bold text-danger" (click)="goHome()">
+    LoanIQ
+  </a>
+
+
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+
+  <div class="collapse navbar-collapse" id="navbarContent">
+    <ul class="navbar-nav ms-auto align-items-center gap-2">
+
+      <!-- NOT LOGGED IN -->
+      <ng-container *ngIf="!isLoggedIn">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/login">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="btn btn-danger rounded-pill px-3" routerLink="/register">
+            Signup
+          </a>
+        </li>
+      </ng-container>
+
+      <!-- LOGGED IN -->
+      <ng-container *ngIf="isLoggedIn">
+
+        <li class="nav-item">
+          <a class="nav-link"(click)="goHome()">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/loanproducts">Loan Products</a>
+        </li>
+        <li class="nav-item profile-dropdown" *ngIf="isLoggedIn">
+
+          <!-- PROFILE ICON -->
+          <div class="profile-circle" (click)="toggleDropdown()">
+            <img src="assets/User_Logo.webp" alt="profile" class="profile-icon">
+            <span *ngIf="unreadCount > 0" class="notification-dot"></span>
+          </div>
+
+          <!-- DROPDOWN -->
+          <div class="dropdown-menu-custom" *ngIf="isDropdownOpen">
+
+            <div class="dropdown-header">
+              <img src="assets/User_Logo.webp" alt="">
+              <div>
+                <h5>{{ userName || 'User' }}</h5>
+                <small>Welcome</small>
+              </div>
+            </div>
+
+            <div class="dropdown-item" (click)="goProfile()">
+              👤 My Profile
+            </div>
+
+            <div class="dropdown-item notification-item" (click)="goToNotifications()">
+
+              <div class="left">
+                <span class="icon">📩</span>
+                <span class="text">Notifications</span>
+              </div>
+
+              <span *ngIf="unreadCount > 0" class="badge">
+                {{ unreadCount }}
+              </span>
+
+            </div>
+
+            <div class="dropdown-divider"></div>
+
+            <div class="dropdown-item logout" (click)="logout()">
+              ↪ Logout
+            </div>
+
+          </div>
+
+        </li>
+      </ng-container>
+
+    </ul>
+  </div>
+
+</nav>

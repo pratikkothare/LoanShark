@@ -1,0 +1,180 @@
+.home {
+  font-family: 'Segoe UI', sans-serif;
+}
+
+
+.hero {
+  position: relative;
+  height: 70vh;
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+  overflow: hidden;
+}
+
+.hero span {
+    color: #38bdf8;
+}
+
+/* Glow */
+.overlay {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(0,198,255,0.25), transparent 70%);
+  filter: blur(30px);
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+/* Content */
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 600px;
+}
+
+.hero h1 {
+  font-size: 42px;
+  font-weight: 700;
+}
+
+.c_loan
+{
+  color:white;
+}
+.hero p {
+  margin: 15px 0;
+  color: #cbd5f5;
+}
+
+/* BUTTONS */
+.hero-buttons {
+  margin-top: 20px;
+}
+
+.btn {
+  padding: 12px 25px;
+  border-radius: 25px;
+  margin: 5px;
+  cursor: pointer;
+  border: none;
+  font-size: 14px;
+}
+
+.primary {
+  background: #ef4444;
+  color: white;
+}
+
+.secondary {
+  background: transparent;
+  border: 1px solid #cbd5f5;
+  color: white;
+}
+
+/* SECTION */
+.section {
+  padding: 60px 20px;
+  text-align: center;
+  background: #f8fafc;
+}
+
+.section h2 {
+    margin-bottom: 30px;
+}
+
+/* CARDS */
+.cards {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  flex-wrap: wrap;
+}
+
+.card {
+  width: 240px;
+  padding: 25px;
+  border-radius: 15px;
+  background: rgba(255,255,255,0.7);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+}
+
+.icon {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+/* STEPS */
+.steps {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.step {
+  width: 200px;
+}
+
+.circle {
+  width: 45px;
+  height: 45px;
+  background: #ef4444;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  margin-bottom: 10px;
+}
+
+/* ===== FOOTER ===== */
+.footer {
+  background: #1f1f2e;
+  color: white;
+  padding: 40px 20px 10px;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  max-width: 1000px;
+  margin: auto;
+}
+
+.footer-links a {
+  display: block;
+  color: #ccc;
+  margin: 5px 0;
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+    color: white;
+}
+
+.footer-logo {
+  color: var(--primary);
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+  color: #aaa;
+}
+

@@ -1,0 +1,36 @@
+.sidebar {
+  left:0;
+  top:0;
+  width: 220px;
+  height: 100vh;
+  background: #ffffff;
+  border-right: 1px solid #e5e7eb;
+  padding: 20px;
+}
+
+.logo {
+  margin-bottom: 20px;
+  color: #b91c1c;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #374151;
+}
+
+  li:hover {
+    background: #f3f4f6;
+  }
+
+  li.active {
+    background: #dc2626;
+    color: white;
+  }

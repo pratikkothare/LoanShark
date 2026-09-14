@@ -1,0 +1,26 @@
+<div class="container">
+  <div class="card" *ngFor="let loan of loanProducts">
+    <h2>{{loan.productName}}</h2>
+    <p><b>Interest Rate:</b> {{loan.interestRate}}%</p>
+    <p><b>Max Amount:</b> ₹{{ loan.maxAmount | number }}</p>
+    <p><b>Tenure:</b> {{loan.tenureMonths}} months</p>
+
+    <button (click)="checkEligibility(loan)">Check Eligibility</button>
+    <button class="know-btn" (click)="openModal(loan)">Know More</button>
+  </div>
+</div>
+
+<div class="modal-overlay" *ngIf="selectedLoan">
+  <div class="modal-card">
+    <span class="close" (click)="closeModal()">✖</span>
+
+    <h2>{{ selectedLoan.productName }}</h2>
+
+    <p><b>Interest Rate:</b> {{ selectedLoan.interestRate }}%</p>
+    <p><b>Max Amount:</b> ₹{{ selectedLoan.maxAmount | number }}</p>
+    <p><b>Tenure:</b> {{ selectedLoan.tenureMonths }} months</p>
+
+    <p><b>Description:</b> {{ selectedLoan.displayDescription }}</p>
+
+  </div>
+</div>

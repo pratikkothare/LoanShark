@@ -1,0 +1,30 @@
+<div class="notification-wrapper">
+  <div class="header">
+    <h2>Notifications</h2>
+    <span class="count">{{ notifications.length }} items</span>
+  </div>
+
+  <div *ngFor="let n of notifications"
+       class="notification-card"
+       [class.unread]="!n.isRead">
+
+    <div class="icon">
+      <span>🔔</span>
+    </div>
+
+    <div class="content" (click)="markAsRead(n.notificationId)">
+      <p class="message"
+         [innerHTML]="getCleanMessage(n.message)">
+      </p>
+      <span class="time">{{ n.createdAt | date:'medium' }}</span>
+    </div>
+
+    <div class="action">
+      <button *ngIf="!n.isRead"
+              (click)="markAsRead(n.notificationId); $event.stopPropagation()">
+        Mark As Read
+      </button>
+    </div>
+
+  </div>
+</div>

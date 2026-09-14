@@ -1,0 +1,130 @@
+<div class="register-wrapper">
+  <div class="card-custom register-card">
+    <h2 class="title">LoanIQ</h2>
+    <p class="subtitle">Create your account</p>
+
+    <form #form="ngForm" (ngSubmit)="register()">
+
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <input type="text" class="form-control input-custom"
+                 placeholder="First Name"
+                 [(ngModel)]="user.firstName"
+                 name="firstName"
+                 #firstNameRef="ngModel"
+                 required
+                 pattern="^[A-Za-z]+$">
+
+          <small class="error"
+                 *ngIf="firstNameRef.touched && firstNameRef.errors?.['required']">
+            First name is required
+          </small>
+
+          <small class="error"
+                 *ngIf="firstNameRef.touched && firstNameRef.errors?.['pattern']">
+            Only alphabets allowed
+          </small>
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <input type="text" class="form-control input-custom"
+                 placeholder="Last Name"
+                 [(ngModel)]="user.lastName"
+                 name="lastName"
+                 #lastNameRef="ngModel"
+                 required
+                 pattern="^[A-Za-z]+$">
+
+          <small class="error"
+                 *ngIf="lastNameRef.touched && lastNameRef.errors?.['required']">
+            Last name is required
+          </small>
+
+          <small class="error"
+                 *ngIf="lastNameRef.touched && lastNameRef.errors?.['pattern']">
+            Only alphabets allowed
+          </small>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <input type="email"
+               class="form-control input-custom"
+               placeholder="Email Address"
+               [(ngModel)]="user.email"
+               name="email"
+               #emailRef="ngModel"
+               required
+               pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$">
+
+        <small class="error"
+               *ngIf="emailRef.touched && emailRef.errors?.['required']">
+          Email is required
+        </small>
+
+        <small class="error"
+               *ngIf="emailRef.touched && emailRef.errors?.['pattern']">
+         Invalid Email format
+        </small>
+      </div>
+
+   
+      <div class="mb-3">
+        <input type="password" class="form-control input-custom"
+               placeholder="Password"
+               [(ngModel)]="user.password"
+               name="password"
+               #passwordRef="ngModel"
+               required
+               minlength="8"
+               pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$">
+
+        <small class="error"
+               *ngIf="passwordRef.touched && passwordRef.errors?.['required']">
+          Password is required
+        </small>
+
+        <small class="error"
+               *ngIf="passwordRef.touched && !passwordRef.errors?.['required'] && passwordRef.errors?.['minlength']">
+          Minimum 8 characters required
+        </small>
+
+        <small class="error"
+               *ngIf="passwordRef.touched && !passwordRef.errors?.['required'] && !passwordRef.errors?.['minlength'] && passwordRef.errors?.['pattern']">
+          Must include uppercase, lowercase and number
+        </small>
+      </div>
+
+
+      <div class="mb-4">
+        <input type="password" class="form-control input-custom"
+               placeholder="Confirm Password"
+               [(ngModel)]="user.confirmPassword"
+               name="confirmPassword"
+               #confirmPasswordRef="ngModel"
+               required>
+
+        <small class="error"
+               *ngIf="confirmPasswordRef.touched && confirmPasswordRef.errors?.['required']">
+          Confirm password is required
+        </small>
+
+        <small class="error"
+               *ngIf="confirmPasswordRef.touched && user.password !== user.confirmPassword">
+          Passwords do not match
+        </small>
+      </div>
+    
+      <button class="btn btn-primary-custom w-100 py-2"
+              [disabled]="form.invalid || user.password !== user.confirmPassword">
+        Create Account
+      </button>
+
+      <p class="login-text">
+        Already have an account?
+        <a routerLink="/login">Login</a>
+      </p>
+
+    </form>
+  </div>
+</div>

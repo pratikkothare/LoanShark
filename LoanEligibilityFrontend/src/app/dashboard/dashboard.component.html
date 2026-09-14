@@ -1,0 +1,163 @@
+<div class="dashboard">
+
+  <div class="welcome">
+    <h2>{{greeting}}, {{firstName}}</h2>
+    <p>Manage your loans and applications</p>
+  </div>
+
+  <div class="cards">
+
+    <div class="card" *ngFor="let p of products | slice:0:4">
+
+      <div class="card-top">
+        <h3>{{ p.productName }}</h3>
+        <span class="badge">Trending</span>
+      </div>
+
+      <div class="card-body">
+        <p>Interest Rate</p>
+        <h2>{{ p.interestRate }}%</h2>
+
+        <p>Max Amount</p>
+        <h4>₹{{ p.maxAmount | number }}</h4>
+      </div>
+
+      <div class="action-row">
+
+        <button class="apply-btn" [routerLink]="['/check-eligibilty',p.productId]">
+          Apply Now →
+        </button>
+
+        <div class="growth-info">
+          <i class="fa fa-line-chart"></i>
+          <span class="count">{{ p.appl }}</span>
+          <span class="text">users applied</span>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="summary-cards">
+
+    <div class="summary-card total">
+      <h4>Total Applications</h4>
+      <p>{{ total }}</p>
+    </div>
+
+    <div class="summary-card approved">
+      <h4>Approved</h4>
+      <p>{{ approved }}</p>
+    </div>
+
+    <div class="summary-card pending">
+      <h4>Pending</h4>
+      <p>{{ pending }}</p>
+    </div>
+
+    <div class="summary-card rejected">
+      <h4>Rejected</h4>
+      <p>{{ rejected }}</p>
+    </div>
+
+  </div>
+
+  <div class="applications">
+
+    <h3>My Applications</h3>
+
+    <table *ngIf="applications.length > 0">
+
+      <tr>
+        <th>Loan</th>
+        <th>Application ID</th>
+        <th>Amount</th>
+        <th>Loan Type</th>
+        <th>Tenure</th>
+        <th>Status</th>
+        <th>Document</th>
+        <th>Action</th>
+      </tr>
+
+      <tr *ngFor="let a of applications; let i = index">
+        <td>{{ i+1 }}</td>
+
+        <td>ID - {{ a.applicationId | number}}</td>
+
+        <td>₹{{ a.loanAmount | number }}</td>
+
+        <td>
+          <span class="loan-tag" [ngClass]="{
+            'home': a.productId == 1,
+            'car': a.productId == 2,
+            'personal': a.productId == 3,
+            'Education': a.productId ==4,
+            'Gold': a.productId==5
+             }">
+            {{  getLoanType(a.productId) }}
+          </span>
+        </td>
+
+        <td>{{ a.tenureMonths }} months</td>
+
+        <td [ngClass]="{
+            'approved': a.status === 'Approved',
+            'pending': a.status === 'Pending',
+            'rejected': a.status === 'Rejected',
+            'withdrawn':a.status=='Withdrawn'
+          }">
+          {{ a.status }}
+        </td>
+        <td>
+          <a *ngIf="a.documentUrl"
+             (click)="download(a.applicationId)"
+             class="doc-btn"
+             style="cursor:pointer">
+            Download
+          </a>
+
+          <span *ngIf="!a.documentUrl" class="no-doc">
+            Not Uploaded
+          </span>
+        </td>
+        <td>
+          <button class="dot-btn"
+                  type="button"
+                  title="Withdraw Application"
+                  (click)="confirmWithdraw(a)">
+          </button>
+        </td>
+      </tr>
+
+    </table>
+
+
+    <div *ngIf="applications.length === 0" class="empty">
+      No applications found 🚀
+    </div>
+    <div class="spinner-overlay" *ngIf="isProcessing">
+      <div class="loader"></div>
+      <p>Withdrawing application...</p>
+    </div>
+    <!-- Confirm popup -->
+    <div class="modal" *ngIf="showConfirm">
+      <div class="popup-box">
+        <h3>Confirm Withdrawal</h3>
+        <p>Are you sure you want to withdraw application?</p>
+
+        <button (click)="withdrawNow()">Yes</button>
+        <button (click)="showConfirm=false">Cancel</button>
+
+      </div>
+    </div>
+    <!-- Message popup -->
+    <div class="modal" *ngIf="showPopup">
+      <div class="popup-box">
+        <p>{{popupMessage}}</p>
+        <button (click)="closePopup()">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
